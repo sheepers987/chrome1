@@ -10,13 +10,17 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-const uri = process.env.MONGODB_URI;
+const uri = process.env.MONGODB_URI || "mongodb+srv://sheepers987:IXAgCOMhdody5IZt@chromeext.q4k9veh.mongodb.net/?retryWrites=true&w=majority&ssl=true";
 if (!uri) {
   console.error('MONGODB_URI is not defined');
   process.exit(1);
 }
 
-const client = new MongoClient(uri);
+const client = new MongoClient(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  ssl: true,
+});
 
 let db;
 
